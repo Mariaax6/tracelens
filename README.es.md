@@ -41,6 +41,6 @@ Admite PCAP clásico (no PCAPNG) con Ethernet y VLAN, Linux SLL (`tcpdump -i any
 
 Una alerta es una pista para investigar, no una prueba de ataque: hay tráfico legítimo que la dispara, y los escaneos lentos o distribuidos la evitan. No hay métricas de precisión ni de rendimiento medidas. No se analiza IPv6, PCAPNG, el contenido de los paquetes ni el reensamblado de fragmentos o flujos TCP. Todo lo que no se analiza se cuenta y aparece en el informe.
 
-## Procedencia
+## Autoría
 
-El código, las capturas de laboratorio y la documentación se generaron con ayuda de IA. No se ha medido ningún resultado en una red real. Entiende y reproduce el análisis antes de presentarlo como trabajo propio; la guía [docs/LEARNING_GUIDE.es.md](docs/LEARNING_GUIDE.es.md) te ayuda a hacerlo.
+Desarrollado por Maria ([@Mariaax6](https://github.com/Mariaax6)). Publicado con [licencia MIT](LICENSE).

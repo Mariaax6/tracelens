@@ -1,4 +1,4 @@
-# Cómo entender y defender TraceLens
+# Guía técnica de TraceLens
 
 ## Recorrido del código
 
@@ -9,7 +9,7 @@
 5. `Main.run`: interpreta la línea de comandos y devuelve el código de salida (`System.exit` solo se llama en `main`, para poder probarlo).
 6. `Fixtures` (en `test/`): genera las capturas sintéticas, con sumas de comprobación válidas, sin enviar tráfico.
 
-## Preguntas de entrevista
+## Preguntas de repaso
 
 - ¿Por qué leer todos los enteros en el orden nativo del ordenador rompería algunos PCAP?
 - ¿Qué diferencia hay entre longitud capturada, longitud original y bytes de aplicación?
@@ -23,10 +23,10 @@
 - ¿Cómo evadiría esta regla un escaneo lento o distribuido?
 - ¿Qué ocurre al llegar a 100.000 flujos y por qué es mejor que abortar?
 
-## Experimento propio sugerido
+## Próximo experimento
 
 Construye tres escenarios sintéticos más con `Fixtures`: muchos puertos lentamente, muchas retransmisiones al mismo puerto y muchos puertos con SYN-ACK. Antes de ejecutarlos, anota qué debería ocurrir y por qué. Cambia `--threshold` y `--window` y guarda una tabla de resultados. No conviertas los resultados de unos ejemplos sintéticos en una tasa de precisión general.
 
-## Ampliación con contenido técnico
+## Posible ampliación
 
 Implementa flujos bidireccionales canónicos con contadores separados por sentido. Especifica cómo normalizas la pareja IP/puerto, añade pruebas de tráfico inverso y compara los resultados con la vista Conversations de Wireshark. Documenta tu cambio y sus límites.

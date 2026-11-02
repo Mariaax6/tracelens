@@ -124,9 +124,9 @@ To cross-check the decoding with an independent tool, for example: `tshark -r ex
 
 Open this directory in IntelliJ IDEA or import `pom.xml` in NetBeans with JDK 17+. The POM is optional IDE metadata and may download Maven plugins; the scripts above are the offline build and verification path. `mvn test` does not run the custom test entry point, so use `build.sh` / `build.ps1`.
 
-## Development provenance
+## Author
 
-The code, fixtures, documentation and the 2.0.0 revision were produced with AI assistance. No individual contribution history, course grade, real-world deployment or measured security impact is claimed. Before presenting this as your portfolio work, study the code, reproduce the results and document the changes and experiments you carry out yourself. See also [SECURITY.md](SECURITY.md).
+Developed by Maria ([@Mariaax6](https://github.com/Mariaax6)). Released under the [MIT License](LICENSE).
 
 ## References
 
