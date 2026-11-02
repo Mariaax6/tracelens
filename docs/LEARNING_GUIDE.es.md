@@ -2,25 +2,30 @@
 
 ## Recorrido del código
 
-1. `PcapReader.read`: identifica magic, byte order y precisión temporal; limita tamaños; recorre registros y decodifica cabeceras.
-2. `Analyzer.accept`: actualiza un flujo direccional y, solo para SYN sin ACK, actualiza la ventana de intentos.
-3. `Main`: transforma los resultados en HTML/CSV/JSON.
-4. `Demo`: genera paquetes sintéticos, incluidas sumas de comprobación, sin enviar tráfico.
+1. `PcapReader.read`: identifica el magic number (orden de bytes y precisión), limita tamaños, calcula el SHA-256 mientras lee y recorre los registros.
+2. `PcapReader.decode`: quita la cabecera de enlace (Ethernet con VLAN, Linux SLL o IP sin enlace), valida IPv4 y lee las cabeceras TCP/UDP/ICMP. Clasifica cada registro en exactamente una categoría: decodificado, no IPv4, otro protocolo, malformado o fragmento.
+3. `Analyzer.accept`: actualiza el flujo direccional y, solo para SYN sin ACK, la ventana del par origen/destino.
+4. `Report`: genera HTML, CSV y JSON escapando siempre los valores.
+5. `Main.run`: interpreta la línea de comandos y devuelve el código de salida (`System.exit` solo se llama en `main`, para poder probarlo).
+6. `Fixtures` (en `test/`): genera las capturas sintéticas, con sumas de comprobación válidas, sin enviar tráfico.
 
 ## Preguntas de entrevista
 
-- ¿Por qué leer todos los enteros en orden nativo del ordenador rompería algunos PCAP?
+- ¿Por qué leer todos los enteros en el orden nativo del ordenador rompería algunos PCAP?
 - ¿Qué diferencia hay entre longitud capturada, longitud original y bytes de aplicación?
+- Si una captura usa `snaplen` 96, ¿por qué se pueden seguir decodificando las cabeceras? ¿Qué comprobación cambia?
 - ¿Por qué un fragmento IPv4 no debe interpretarse como un segmento TCP completo?
 - ¿Por qué un flujo de ida y otro de vuelta son dos entradas en esta implementación?
-- ¿Cómo se elimina un puerto del contador cuando expira uno de varios intentos al mismo puerto?
-- ¿Por qué no demuestra un ataque la presencia de muchos puertos distintos? ¿Qué tráfico legítimo se parece?
-- ¿Cómo evadiría esta regla una exploración lenta o distribuida?
-- ¿Qué limita realmente la memoria? ¿Y qué parte depende del número de flujos?
+- ¿Por qué basta guardar la última hora de SYN por puerto para contar puertos distintos en la ventana? ¿Cuánta memoria usa como máximo un par?
+- ¿Por qué los timestamps en nanosegundos se guardan como `long` y no como `double`?
+- ¿Qué pasa si un paquete llega con un timestamp anterior al previo? ¿Por qué no se aborta el análisis?
+- ¿Por qué muchos puertos distintos no demuestran un ataque? ¿Qué tráfico legítimo se parece?
+- ¿Cómo evadiría esta regla un escaneo lento o distribuido?
+- ¿Qué ocurre al llegar a 100.000 flujos y por qué es mejor que abortar?
 
 ## Experimento propio sugerido
 
-Construye tres escenarios sintéticos adicionales: muchos puertos lentamente; muchas retransmisiones al mismo puerto; muchos puertos con SYN-ACK. Antes de ejecutarlos, anota qué debería ocurrir y por qué. Cambia umbral/ventana y guarda una tabla de resultados. No conviertas resultados sobre unos ejemplos sintéticos en una tasa de precisión general.
+Construye tres escenarios sintéticos más con `Fixtures`: muchos puertos lentamente, muchas retransmisiones al mismo puerto y muchos puertos con SYN-ACK. Antes de ejecutarlos, anota qué debería ocurrir y por qué. Cambia `--threshold` y `--window` y guarda una tabla de resultados. No conviertas los resultados de unos ejemplos sintéticos en una tasa de precisión general.
 
 ## Ampliación con contenido técnico
 

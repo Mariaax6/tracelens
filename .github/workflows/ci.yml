@@ -1,5 +1,7 @@
 name: Java verification
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
 permissions:
   contents: read
 jobs:
@@ -14,4 +16,7 @@ jobs:
         with:
           distribution: temurin
           java-version: ${{ matrix.java }}
-      - run: sh build.sh
+      - name: Build and run unit tests
+        run: sh build.sh
+      - name: Run examples and verify exit codes and counts
+        run: sh demo.sh

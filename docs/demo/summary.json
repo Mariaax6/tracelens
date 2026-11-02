@@ -1,1 +1,9 @@
-{"records":33,"decoded":33,"unsupported":0,"malformed":0,"fragments":0,"truncated":0,"flows":19,"alerts":1}
+{"schemaVersion":2,"tool":"tracelens","version":"2.0.0",
+"input":{"file":"demo.pcap","sha256":"a038afb34b5abb402120b491163859cde791e75522e4def206042cc0b7a20a60","linkType":1,"linkTypeName":"Ethernet","timestampPrecision":"microsecond"},
+"parameters":{"threshold":12,"windowSeconds":10},
+"capture":{"records":33,"first":"2023-11-14T22:13:20Z","last":"2023-11-14T22:13:30Z"},
+"coverage":{"decoded":33,"nonIpv4":0,"otherProtocol":0,"malformed":0,"fragments":0,"truncated":0,"reordered":0},
+"flows":19,"untrackedPackets":0,"unevaluatedSyns":0,
+"alerts":[
+{"source":"192.0.2.20","destination":"198.51.100.10","time":"2023-11-14T22:13:25.200Z","windowStart":"2023-11-14T22:13:23Z","distinctPorts":12,"samplePorts":[1000,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1011]}
+]}

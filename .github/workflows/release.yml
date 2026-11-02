@@ -14,8 +14,15 @@ jobs:
           distribution: temurin
           java-version: '17'
       - name: Build and verify
-        run: sh build.sh
+        run: |
+          sh build.sh
+          sh demo.sh
+      - name: Check tag matches the built version
+        run: |
+          test "v$(java -jar dist/tracelens.jar --version | cut -d' ' -f2)" = "$GITHUB_REF_NAME"
+      - name: Checksum
+        run: cd dist && sha256sum tracelens.jar > tracelens.jar.sha256
       - name: Publish verified JAR
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" --verify-tag --title "$GITHUB_REF_NAME" --notes-file docs/RELEASE_NOTES.md dist/tracelens.jar
+        run: gh release create "$GITHUB_REF_NAME" --verify-tag --title "$GITHUB_REF_NAME" --notes-file docs/RELEASE_NOTES.md dist/tracelens.jar dist/tracelens.jar.sha256
